@@ -17,12 +17,14 @@ public class Player : MonoBehaviour
 	Rigidbody2D _rb;
 
 	GameObject _pickup;
+	GameObject _freezer;
 
 	bool _isDisposal;
 	bool _isTable;
 
 	Organ _organ;
 	Body _body;
+	Table _table;
 
 
 
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
 	void Start()
 	{
 		_rb = GetComponent<Rigidbody2D>();
+		_table = FindObjectOfType<Table>();
 		_pickup = empty;
 	}
 
@@ -67,14 +70,17 @@ public class Player : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			// check if body 
-
-			// check if orgran
 			if (_isCarrying)
 			{
 				if (_organ != null)
 				{
-					_organ.Drop();
+					if (_isDisposal)
+						_organ.Dispose();
+					else if (_freezer != empty)
+						_organ.Deposit(_freezer);
+					else
+						_organ.Drop();
+
 					_organ = null;
 				}
 
@@ -82,12 +88,27 @@ public class Player : MonoBehaviour
 				{
 					_normal.enabled = true;
 					_holding.enabled = false;
-					_body.Drop();
+
+					if (_isDisposal)
+						_body.Dispose();
+					else if (_isTable && !_table.hasBody)
+						_body.Put();
+					else
+						_body.Drop();
+
 					_body = null;
 				}
 
 				_isCarrying = false;
 				_pickup = empty;
+
+				return;
+			}
+
+			if (_isTable && _table.hasBody)
+			{
+				_table.hasBody = false;
+				_pickup = _table.body;
 			}
 
 			if (_pickup != empty && _pickup.TryGetComponent<Organ>(out _organ))
@@ -105,30 +126,6 @@ public class Player : MonoBehaviour
 				_body.Grab();
 				return;
 			}
-
-
-			/*
-				if player is not carrying anything
-					if player is near tank then take body
-					if player is near body then grab body
-					if player is near freezer && freezer contains organ then grab freezer
-					if player is near organ then grab organ
-
-				if player is carrying body 
-					if player is not near anything drop body
-					if player is near disposal then dispose of body
-					if player is near table put on table
-
-				if player is carrying organ
-					if player is not near anything drop organ
-					if player is near disposal then dispose of organ
-					if player is near freezer put in freezer
-
-				if player is carrying freezer
-					if player is not near anything then drop freezer
-					if player is near pickup then exchange freezer
-
-			*/
 		}
 
 		if (Input.GetKeyDown(KeyCode.F))
@@ -146,10 +143,23 @@ public class Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Body") || other.gameObject.CompareTag("Organ"))
 			_pickup = other.gameObject;
+
+		if (other.gameObject.CompareTag("Disposal"))
+			_isDisposal = true;
+
+		if (other.gameObject.CompareTag("Table"))
+			_isTable = true;
+
+		if (other.gameObject.CompareTag("Freezer"))
+			_freezer = other.gameObject;
 	}
 
 	void OnCollisionExit2D(Collision2D other)
 	{
+		_freezer = empty;
 		_pickup = empty;
+
+		_isTable = false;
+		_isDisposal = false;
 	}
 }

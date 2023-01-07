@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8851159622816415364}
   - component: {fileID: 6652756308769376533}
   - component: {fileID: 2394623145771332187}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eyes
   m_TagString: Organ
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1074351353320824104}
   - component: {fileID: 4743037771724693641}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

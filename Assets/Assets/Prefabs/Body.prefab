@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3504446258544548641}
   - component: {fileID: 5053594362250199926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7533105880654008878}
   - component: {fileID: 4557150588680917767}
   - component: {fileID: 8585809149509059538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Body
   m_Icon: {fileID: 0}
@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprite: {fileID: 5053594362250199926}
+  _collider: {fileID: 8585809149509059538}
+  _tablePos: {x: -4.615, y: -2.18, z: 0}
 --- !u!50 &4557150588680917767
 Rigidbody2D:
   serializedVersion: 4
