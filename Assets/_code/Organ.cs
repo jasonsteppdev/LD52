@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object : MonoBehaviour
+public class Organ : MonoBehaviour
 {
 
-	[SerializeField] ObjectType _type = ObjectType.Organ;
 	[SerializeField] SpriteRenderer _spriteRenderer;
+	[SerializeField] Collider2D _collider;
 
 	Player _player;
-
 	bool _isGrabbed = false;
+	bool _isDeposited = false;
+	GameObject _freezer;
 
 	void Start()
 	{
@@ -19,7 +20,7 @@ public class Object : MonoBehaviour
 
 	void Update()
 	{
-		if(_isGrabbed)
+		if (_isGrabbed)
 			transform.position = _player.grabber.transform.position;
 	}
 
@@ -38,10 +39,17 @@ public class Object : MonoBehaviour
 			_spriteRenderer.sortingOrder = 0;
 		}
 	}
-}
 
-enum ObjectType
-{
-	Organ,
-	Body
+	public void Dispose()
+	{
+		gameObject.SetActive(false);
+	}
+
+	public void Deposit(GameObject freezer)
+	{
+		_isDeposited = true;
+		_collider.enabled = false;
+		_freezer = freezer;
+	}
+
 }

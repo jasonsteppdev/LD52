@@ -5,29 +5,39 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	public GameObject grabber;
+	public GameObject bodyGrabber;
 
 	[SerializeField] float moveSpeed = 1f;
 	[SerializeField] GameObject empty;
+	[SerializeField] SpriteRenderer _normal;
+	[SerializeField] SpriteRenderer _holding;
 
 	Vector2 _input = new Vector2(0, 0);
 	Vector2 _direction = new Vector2(0, 0);
 	Rigidbody2D _rb;
 
 	GameObject _pickup;
-	Object _object;
+
+	bool _isDisposal;
+	bool _isTable;
+
+	Organ _organ;
+	Body _body;
+
+
+
 	bool _isCarrying = false;
 
 	void Start()
 	{
 		_rb = GetComponent<Rigidbody2D>();
+		_pickup = empty;
 	}
 
 	void Update()
 	{
 		Move();
 		Action();
-
-		Debug.Log(_pickup);
 	}
 
 	void Move()
@@ -40,10 +50,12 @@ public class Player : MonoBehaviour
 
 		_rb.position += _direction * moveSpeed * Time.deltaTime;
 
-		if(_input.x < 0)
+
+		if (_input.x < 0)
 			transform.rotation = Quaternion.Euler(0, 180, 0);
-		else if(_input.x > 0)
+		else if (_input.x > 0)
 			transform.rotation = Quaternion.Euler(0, 0, 0);
+
 
 		/*
 			if context menu is open 
@@ -55,20 +67,45 @@ public class Player : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.E))
 		{
+			// check if body 
+
+			// check if orgran
 			if (_isCarrying)
 			{
-				_object.Drop();
+				if (_organ != null)
+				{
+					_organ.Drop();
+					_organ = null;
+				}
+
+				if (_body != null)
+				{
+					_normal.enabled = true;
+					_holding.enabled = false;
+					_body.Drop();
+					_body = null;
+				}
+
 				_isCarrying = false;
 				_pickup = empty;
 			}
-			else
+
+			if (_pickup != empty && _pickup.TryGetComponent<Organ>(out _organ))
 			{
-				if (_pickup != null && _pickup.TryGetComponent<Object>(out _object))
-				{
-					_isCarrying = true;
-					_object.Grab();
-				}
+				_isCarrying = true;
+				_organ.Grab();
+				return;
 			}
+
+			if (_pickup != empty && _pickup.TryGetComponent<Body>(out _body))
+			{
+				_isCarrying = true;
+				_normal.enabled = false;
+				_holding.enabled = true;
+				_body.Grab();
+				return;
+			}
+
 
 			/*
 				if player is not carrying anything
@@ -102,6 +139,7 @@ public class Player : MonoBehaviour
 				if context menu open && context menu item selected then begin organ harvest
 			*/
 		}
+
 	}
 
 	void OnCollisionStay2D(Collision2D other)
@@ -110,7 +148,8 @@ public class Player : MonoBehaviour
 			_pickup = other.gameObject;
 	}
 
-	void OnCollisionExit2D(Collision2D other) {
+	void OnCollisionExit2D(Collision2D other)
+	{
 		_pickup = empty;
 	}
 }
