@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour 
+public class ObjectPool : MonoBehaviour
 {
 	[SerializeField] GameObject _object;
 	[SerializeField] int amount;
@@ -38,6 +38,16 @@ public class ObjectPool : MonoBehaviour
 		newObject.transform.position = position;
 		newObject.transform.rotation = rotation;
 		newObject.gameObject.SetActive(true);
+	}
+
+	public GameObject GrabActiveObject(Vector3 position, Quaternion rotation)
+	{
+		GetAvailable();
+		GameObject newObject = _objects[_nextObject];
+		newObject.transform.position = position;
+		newObject.transform.rotation = rotation;
+		newObject.gameObject.SetActive(true);
+		return newObject;
 	}
 
 	void GetAvailable()

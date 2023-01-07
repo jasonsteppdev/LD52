@@ -37,7 +37,7 @@ public class Body : MonoBehaviour
 		}
 	}
 
-	public void Dispose() 
+	public void Dispose()
 	{
 		gameObject.SetActive(false);
 	}
@@ -46,11 +46,11 @@ public class Body : MonoBehaviour
 	{
 		_isGrabbed = false;
 		_collider.enabled = false;
-		transform.position = _tablePos;
-		transform.position = new Vector3(transform.position.x, transform.position.y + 0.25f, 0);
-		_sprite.enabled = true;
-		_table.body = gameObject;
-		_table.hasBody = true;
+		_table.PutBody(gameObject);
+	}
+
+	public void Chop()
+	{
+
 	}
 }
- 
