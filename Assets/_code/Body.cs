@@ -6,12 +6,14 @@ public class Body : MonoBehaviour
 {
 
 	[SerializeField] SpriteRenderer _sprite;
+	[SerializeField] SpriteRenderer _spriteOpen;
 	[SerializeField] Collider2D _collider;
 	[SerializeField] Vector3 _tablePos;
 
 	Player _player;
 	Table _table;
 	bool _isGrabbed;
+	public bool isOpen;
 
 	void Start()
 	{
@@ -23,6 +25,7 @@ public class Body : MonoBehaviour
 	{
 		_isGrabbed = true;
 		_sprite.enabled = false;
+		_spriteOpen.enabled = false;
 		_collider.enabled = false;
 	}
 
@@ -32,7 +35,12 @@ public class Body : MonoBehaviour
 		{
 			_isGrabbed = false;
 			transform.position = new Vector3(_player.bodyGrabber.transform.position.x, _player.transform.position.y, transform.position.z);
-			_sprite.enabled = true;
+			
+			if(!isOpen)
+				_sprite.enabled = true;
+			else
+				_spriteOpen.enabled = true;
+
 			_collider.enabled = true;
 		}
 	}
@@ -51,6 +59,6 @@ public class Body : MonoBehaviour
 
 	public void Chop()
 	{
-
+		isOpen = true;
 	}
 }

@@ -11,6 +11,7 @@ TagManager:
   - Table
   - Ice
   - Tank
+  - Pickup
   layers:
   - Default
   - TransparentFX

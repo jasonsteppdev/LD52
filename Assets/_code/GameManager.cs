@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,15 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField] float toxicityDecayRate = 1f;
 	[SerializeField] float toxicityDecayValue = 0.0001f;
+	[SerializeField] TMP_Text creditText;
+
+	[SerializeField] SpriteRenderer _sprite;
+
+	[SerializeField] Sprite eyeSprite;
+	[SerializeField] Sprite lungsSprite;
+	[SerializeField] Sprite heartSprite;
+	[SerializeField] Sprite kidneySprite;
+
 
 	public ObjectPool bodyPool;
 	public ObjectPool eyePool;
@@ -21,24 +31,90 @@ public class GameManager : MonoBehaviour
 	public Gradient gradient;
 	public bool toxic;
 
+	public OrganType organ = OrganType.Eyes;
+
 	float _toxicityDecayTimer;
+	bool _isAnimatingIn;
+	bool _isAnimatingOut;
+
+	int credits;
 
 	public static GameManager Instance { get; private set; }
 
 	void Awake()
 	{
 		GetGameInstance();
+		credits = 0;
+		SetCredits();
 	}
 
 	void Start()
 	{
-
+		RandomizeOrgan();
 	}
 
 	void Update()
 	{
 		HandleToxicity();
 		toxicityImage.color = ColorFromGradient(toxicity);
+	}
+
+	public void Deposit(OrganType organ)
+	{
+		_isAnimatingOut = true;
+
+		if (organ == this.organ)
+			AddCredits(100);
+		else
+			RemoveCredits(100);
+	}
+
+	public void SetCredits()
+	{
+		creditText.text = credits.ToString();
+	}
+
+	public void AddCredits(int credits)
+	{
+		this.credits += credits;
+		SetCredits();
+	}
+
+	public void RemoveCredits(int credits)
+	{
+		this.credits -= credits;
+		SetCredits();
+	}
+
+	public void AnimateBubbleIn()
+	{
+		
+	}
+
+	public void RandomizeOrgan()
+	{
+		int random = Random.Range(0, 4);
+		switch (random)
+		{
+			case 0:
+				organ = OrganType.Eyes;
+				_sprite.sprite = eyeSprite;
+				break;
+			case 1:
+				organ = OrganType.Lungs;
+				_sprite.sprite = lungsSprite;
+				break;
+			case 2:
+				organ = OrganType.Heart;
+				_sprite.sprite = heartSprite;
+				break;
+			case 3:
+				organ = OrganType.Kidney;
+				_sprite.sprite = kidneySprite;
+				break;
+		}
+
+
 	}
 
 	void HandleToxicity()

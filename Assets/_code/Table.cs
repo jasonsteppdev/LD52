@@ -7,16 +7,25 @@ public class Table : MonoBehaviour
 
 	[SerializeField] SpriteRenderer tableSprite;
 	[SerializeField] SpriteRenderer bodySprite;
+	[SerializeField] SpriteRenderer openBodySprite;
 
 	public bool hasBody;
 
-	GameObject _body;
+	public GameObject body;
+	Body _body;
 
 	public void PutBody(GameObject body)
 	{
 		tableSprite.enabled = false;
-		bodySprite.enabled = true;
-		_body = body;
+		if (body.TryGetComponent<Body>(out _body))
+		{
+			if (_body.isOpen)
+				openBodySprite.enabled = true;
+			else
+				bodySprite.enabled = true;
+		}
+
+		this.body = body;
 		hasBody = true;
 	}
 
@@ -24,8 +33,16 @@ public class Table : MonoBehaviour
 	{
 		tableSprite.enabled = true;
 		bodySprite.enabled = false;
+		openBodySprite.enabled = false;
 		hasBody = false;
-		return _body;
+		return body;
+	}
+
+	public void OpenBody()
+	{
+		openBodySprite.enabled = true;
+		bodySprite.enabled = false;
+		tableSprite.enabled = false;
 	}
 
 }

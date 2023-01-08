@@ -18,7 +18,7 @@ public class Ice : MonoBehaviour
 	bool _isGrabbed = false;
 	bool _isDeposited = false;
 
-	void Start()
+	void Awake()
 	{
 		_player = FindObjectOfType<Player>();
 	}
@@ -55,6 +55,14 @@ public class Ice : MonoBehaviour
 		}
 	}
 
+	public void Deposit()
+	{
+		// check if its the right organ the pickup is looking for
+		// do something with money
+		gameObject.SetActive(false);
+	}
+
+
 	public void SetOrganType(Organ organ)
 	{
 		organType = organ.organType;
@@ -65,15 +73,27 @@ public class Ice : MonoBehaviour
 		{
 			case OrganType.Eyes:
 				eyesSprite.enabled = true;
+				lungsSprite.enabled = false;
+				heartSprite.enabled = false;
+				kidneySprite.enabled = false;
 				break;
 			case OrganType.Lungs:
 				lungsSprite.enabled = true;
+				eyesSprite.enabled = false;
+				heartSprite.enabled = false;
+				kidneySprite.enabled = false;
 				break;
 			case OrganType.Heart:
 				heartSprite.enabled = true;
+				lungsSprite.enabled = false;
+				eyesSprite.enabled = false;
+				kidneySprite.enabled = false;
 				break;
 			case OrganType.Kidney:
 				kidneySprite.enabled = true;
+				lungsSprite.enabled = false;
+				heartSprite.enabled = false;
+				eyesSprite.enabled = false;
 				break;
 		}
 	}

@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 	bool _isTable;
 	bool _isFreezer;
 	bool _isTank;
+	bool _isPickup;
 	bool _canMove = true;
 	bool _chopping = false;
 
@@ -85,19 +86,23 @@ public class Player : MonoBehaviour
 		else if (_input.x > 0)
 			transform.rotation = Quaternion.Euler(0, 0, 0);
 
-
-		/*
-			if context menu is open 
-				if input left, right, up, or down then select context menu item
-		*/
 	}
 
 	void Action()
 	{
-		if (Input.GetKeyDown(KeyCode.F) && _isTable && _table.hasBody)
+		if (Input.GetKeyDown(KeyCode.F) && _isTable && _table.hasBody && !_isCarrying)
 		{
-			_canMove = false;
-			_chopping = true;
+			if (_table.body.TryGetComponent<Body>(out _body))
+			{
+				if (!_body.isOpen)
+				{
+					_canMove = false;
+					_chopping = true;
+					_body.Chop();
+					_table.OpenBody();
+				}
+			}
+
 		}
 
 		if (Input.GetKeyDown(KeyCode.E))
@@ -111,9 +116,6 @@ public class Player : MonoBehaviour
 			CheckCarrying();
 			CheckPickup();
 		}
-
-
-
 	}
 
 	void CheckCarrying()
@@ -131,9 +133,16 @@ public class Player : MonoBehaviour
 				{
 					_pickup = GameManager.Instance.iceboxPool.GrabActiveObject(gameObject.transform.position, Quaternion.identity);
 					if (_pickup != empty && _pickup.TryGetComponent<Ice>(out _iceBox))
+					{
 						_iceBox.SetOrganType(_organ);
+						_isCarrying = true;
+						_normal.enabled = false;
+						_holding.enabled = true;
+						_iceBox.Grab();
+					}
 
 					_organ.Deposit();
+					return;
 				}
 				else
 					_organ.Drop();
@@ -161,7 +170,14 @@ public class Player : MonoBehaviour
 				_normal.enabled = true;
 				_holding.enabled = false;
 
-				_iceBox.Drop();
+				if (_isPickup)
+				{
+					GameManager.Instance.Deposit(_iceBox.organType);
+					_iceBox.Deposit();
+				}
+				else
+					_iceBox.Drop();
+
 				_iceBox = null;
 			}
 
@@ -200,8 +216,6 @@ public class Player : MonoBehaviour
 			_iceBox.Grab();
 			return;
 		}
-
-
 	}
 
 	void OnCollisionStay2D(Collision2D other)
@@ -221,6 +235,9 @@ public class Player : MonoBehaviour
 		if (other.gameObject.CompareTag("Tank"))
 			_isTank = true;
 
+		if (other.gameObject.CompareTag("Pickup"))
+			_isPickup = true;
+
 	}
 
 	void OnCollisionExit2D(Collision2D other)
@@ -231,5 +248,6 @@ public class Player : MonoBehaviour
 		_isFreezer = false;
 		_isTable = false;
 		_isDisposal = false;
+		_isPickup = false;
 	}
 }

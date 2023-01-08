@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 79c4a8846385ec44682e00cf88f029f2
+guid: 471b769ede4e8804c9e4cef3e1e5eab0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,8 +45,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.3668568}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -140,43 +140,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Body-Lying_0
+      name: Pickup-Bubble_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.4952449, y: 0.4080677}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32b28e1534d30714d8d52d2a85a41070
-      internalID: -685330499
+      spriteID: d2b4f749e221c4e4691b5f0a88c91ba5
+      internalID: 116511169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Body-Lying_1
+      name: Pickup-Bubble_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 64
+        width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.4080677}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d88ad66e569b0f4ba8557387181f9e3
-      internalID: 1094866350
+      spriteID: 3625c74be54efde4d821ccbb63a401bd
+      internalID: -689317026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pickup-Bubble_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4320ed1004f9fac4b8bd52df08252fa9
+      internalID: 2121856915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pickup-Bubble_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c9dfe643721584a8ce1fadee15d8f1
+      internalID: -235153492
       vertices: []
       indices: 
       edges: []
@@ -185,15 +227,17 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Body-Lying_0: -685330499
-      Body-Lying_1: 1094866350
+      Pickup-Bubble_3: -235153492
+      Pickup-Bubble_1: -689317026
+      Pickup-Bubble_0: 116511169
+      Pickup-Bubble_2: 2121856915
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
