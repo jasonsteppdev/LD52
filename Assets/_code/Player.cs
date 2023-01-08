@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
 	[SerializeField] SpriteRenderer _normal;
 	[SerializeField] SpriteRenderer _holding;
 	[SerializeField] SpriteRenderer _holdingBody;
+	[SerializeField] GameObject chopbar;
+	[SerializeField] Image chopFillBar;
 
 	Vector2 _input = new Vector2(0, 0);
 	Vector2 _direction = new Vector2(0, 0);
@@ -56,15 +59,17 @@ public class Player : MonoBehaviour
 		if (_chopping)
 		{
 			chopTimer += Time.deltaTime;
+			chopFillBar.fillAmount = chopTimer / 5;
 			if (chopTimer > 5)
 			{
+				chopbar.SetActive(false);
 				_chopping = false;
 				chopTimer = 0;
 				_canMove = true;
-				GameManager.Instance.eyePool.SetActiveObject(gameObject.transform.position + new Vector3(0.1f, 0.25f, 0), Quaternion.identity);
-				GameManager.Instance.heartPool.SetActiveObject(gameObject.transform.position + new Vector3(0.2f, 0.25f, 0), Quaternion.identity);
-				GameManager.Instance.lungsPool.SetActiveObject(gameObject.transform.position + new Vector3(0.3f, 0.25f, 0), Quaternion.identity);
-				GameManager.Instance.kidneyPool.SetActiveObject(gameObject.transform.position + new Vector3(0.4f, 0.25f, 0), Quaternion.identity);
+				GameManager.Instance.eyePool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+				GameManager.Instance.heartPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+				GameManager.Instance.lungsPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+				GameManager.Instance.kidneyPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
 			}
 		}
 
@@ -82,9 +87,15 @@ public class Player : MonoBehaviour
 
 
 		if (_input.x < 0)
+		{
+			chopbar.transform.rotation = Quaternion.Euler(0, 0, 0);
 			transform.rotation = Quaternion.Euler(0, 180, 0);
+		}
 		else if (_input.x > 0)
+		{
+			chopbar.transform.rotation = Quaternion.Euler(0, 0, 0);
 			transform.rotation = Quaternion.Euler(0, 0, 0);
+		}
 
 	}
 
@@ -98,8 +109,11 @@ public class Player : MonoBehaviour
 				{
 					_canMove = false;
 					_chopping = true;
+					chopbar.SetActive(true);
+					chopFillBar.fillAmount = 0;
 					_body.Chop();
 					_table.OpenBody();
+					_body = null;
 				}
 			}
 

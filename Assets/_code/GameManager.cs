@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField] Sprite heartSprite;
 	[SerializeField] Sprite kidneySprite;
 
+	[SerializeField] Bubble bubble;
+
 
 	public ObjectPool bodyPool;
 	public ObjectPool eyePool;
@@ -61,12 +63,12 @@ public class GameManager : MonoBehaviour
 
 	public void Deposit(OrganType organ)
 	{
-		_isAnimatingOut = true;
-
 		if (organ == this.organ)
 			AddCredits(100);
 		else
 			RemoveCredits(100);
+
+		bubble.isClosing = true;
 	}
 
 	public void SetCredits()
@@ -84,11 +86,6 @@ public class GameManager : MonoBehaviour
 	{
 		this.credits -= credits;
 		SetCredits();
-	}
-
-	public void AnimateBubbleIn()
-	{
-		
 	}
 
 	public void RandomizeOrgan()
@@ -113,7 +110,7 @@ public class GameManager : MonoBehaviour
 				_sprite.sprite = kidneySprite;
 				break;
 		}
-
+		bubble.isOpening = true;
 
 	}
 

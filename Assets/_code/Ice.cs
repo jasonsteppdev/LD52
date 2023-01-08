@@ -57,8 +57,6 @@ public class Ice : MonoBehaviour
 
 	public void Deposit()
 	{
-		// check if its the right organ the pickup is looking for
-		// do something with money
 		gameObject.SetActive(false);
 	}
 

@@ -220,6 +220,8 @@ MonoBehaviour:
   _spriteOpen: {fileID: 8831961623222262714}
   _collider: {fileID: 8585809149509059538}
   _tablePos: {x: -4.615, y: -2.18, z: 0}
+  toxicityRate: 1
+  toxicityValue: 0.0025
   isOpen: 0
 --- !u!50 &4557150588680917767
 Rigidbody2D:
@@ -233,7 +235,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.25
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
