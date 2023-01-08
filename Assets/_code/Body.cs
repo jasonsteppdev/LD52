@@ -77,6 +77,7 @@ public class Body : MonoBehaviour
 
 	public void Chop()
 	{
+		GameManager.Instance.audioManager.PlayChopping();
 		isOpen = true;
 	}
 }

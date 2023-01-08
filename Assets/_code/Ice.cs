@@ -44,6 +44,7 @@ public class Ice : MonoBehaviour
 	{
 		if (_isGrabbed)
 		{
+			GameManager.Instance.audioManager.PlayDropOff();
 			_isGrabbed = false;
 			transform.position = new Vector3(_player.grabber.transform.position.x, _player.transform.position.y, transform.position.z);
 			_spriteRenderer.sortingOrder = 0;
@@ -57,6 +58,7 @@ public class Ice : MonoBehaviour
 
 	public void Deposit()
 	{
+		GameManager.Instance.audioManager.PlayDropOff();
 		gameObject.SetActive(false);
 	}
 

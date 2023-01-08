@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
 					_chopping = false;
 					chopTimer = 0;
 					_canMove = true;
+					GameManager.Instance.audioManager.PlayOrganSpawn();
 					GameManager.Instance.eyePool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
 					GameManager.Instance.heartPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
 					GameManager.Instance.lungsPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			if (_isTable && _table.hasBody)
+			if (_isTable && _table.hasBody && !_isCarrying)
 				_pickup = _table.RemoveBody();
 
 			if (_isTank && !_isCarrying)

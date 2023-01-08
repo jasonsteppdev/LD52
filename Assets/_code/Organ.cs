@@ -48,6 +48,7 @@ public class Organ : MonoBehaviour
 	{
 		if (_isGrabbed)
 		{
+			GameManager.Instance.audioManager.PlayDropOrgan();
 			_isGrabbed = false;
 			transform.position = new Vector3(_player.grabber.transform.position.x, _player.transform.position.y, transform.position.z);
 			_spriteRenderer.sortingOrder = 0;
@@ -57,6 +58,7 @@ public class Organ : MonoBehaviour
 
 	public void Dispose()
 	{
+		GameManager.Instance.audioManager.PlayDropOrgan();
 		_isGrabbed = false;
 		_spriteRenderer.sortingOrder = 0;
 		_collider.enabled = true;
@@ -67,6 +69,7 @@ public class Organ : MonoBehaviour
 
 	public void Deposit()
 	{
+		GameManager.Instance.audioManager.PlayDropOrgan();
 		_isGrabbed = false;
 		_spriteRenderer.sortingOrder = 0;
 		_collider.enabled = true;

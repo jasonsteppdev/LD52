@@ -6,6 +6,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+	[SerializeField] public AudioManager audioManager;
+
 	[SerializeField] Image toxicityImage;
 
 	[SerializeField] float toxicityDecayRate = 1f;
@@ -14,6 +16,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] TMP_Text timerText;
 	[SerializeField] TMP_Text gameoverText;
 	[SerializeField] Image fadeBlackImage;
+	[SerializeField] Image fadeOut;
 	[SerializeField] GameObject endScreen;
 
 
@@ -50,9 +53,13 @@ public class GameManager : MonoBehaviour
 	float fadeTime = 0;
 	float fadeTimeSpeed = 1f;
 
+	float fadeOutTime = 0;
+	public float fadeOutSpeed = 1f;
+
 	float slideInTime = 0;
 	float slideInSpeed = 1f;
 	bool isSlideInText = false;
+	bool start = true;
 
 	int credits;
 	int organsSold;
@@ -76,19 +83,22 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
+		if (start)
+			FadeOut();
+
 		if (isGameOver)
 			ShowGameOverScreen();
 
-		if(!isGameOver)
+		if (!isGameOver)
 			HandleToxicity();
-			
+
 		toxicityImage.color = ColorFromGradient(toxicity);
 
 
 		if (_timer > 0)
 		{
 			_timer -= Time.deltaTime;
-			if(!isGameOver)
+			if (!isGameOver)
 				UpdateTimer(_timer);
 		}
 		else
@@ -100,6 +110,20 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	void FadeOut()
+	{
+		if (fadeOutTime < 1)
+		{
+			fadeOutTime += Time.deltaTime * fadeOutSpeed;
+			fadeOut.color = Color.Lerp(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), fadeOutTime);
+		}
+		else
+		{
+			fadeOutTime = 1;
+			fadeOut.color = new Color(0, 0, 0, 0);
+			start = false;
+		}
+	}
 
 	void ShowGameOverScreen()
 	{
