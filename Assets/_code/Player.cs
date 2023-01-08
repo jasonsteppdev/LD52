@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
 				{
 					chopbar.SetActive(false);
 					_chopping = false;
+					animator.SetBool("isChopping", false);
 					chopTimer = 0;
 					_canMove = true;
 					GameManager.Instance.audioManager.PlayOrganSpawn();
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour
 				{
 					_canMove = false;
 					_chopping = true;
+					animator.SetBool("isChopping", true);
 					chopbar.SetActive(true);
 					chopFillBar.fillAmount = 0;
 					_body.Chop();
