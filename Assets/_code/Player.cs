@@ -50,26 +50,29 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (_canMove)
+		if (!GameManager.Instance.isGameOver)
 		{
-			Action();
-			Move();
-		}
-
-		if (_chopping)
-		{
-			chopTimer += Time.deltaTime;
-			chopFillBar.fillAmount = chopTimer / 5;
-			if (chopTimer > 5)
+			if (_canMove)
 			{
-				chopbar.SetActive(false);
-				_chopping = false;
-				chopTimer = 0;
-				_canMove = true;
-				GameManager.Instance.eyePool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
-				GameManager.Instance.heartPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
-				GameManager.Instance.lungsPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
-				GameManager.Instance.kidneyPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+				Action();
+				Move();
+			}
+
+			if (_chopping)
+			{
+				chopTimer += Time.deltaTime;
+				chopFillBar.fillAmount = chopTimer / 5;
+				if (chopTimer > 5)
+				{
+					chopbar.SetActive(false);
+					_chopping = false;
+					chopTimer = 0;
+					_canMove = true;
+					GameManager.Instance.eyePool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+					GameManager.Instance.heartPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+					GameManager.Instance.lungsPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+					GameManager.Instance.kidneyPool.SetActiveObject(new Vector3(-2.859f, -2.229f, 0), Quaternion.identity);
+				}
 			}
 		}
 
