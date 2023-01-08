@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField] Image fadeBlackImage;
 	[SerializeField] Image fadeOut;
 	[SerializeField] GameObject endScreen;
+	[SerializeField] TMP_Text creditsEarnedText;
+	[SerializeField] TMP_Text organsSoldText;
 
 
 
@@ -87,7 +90,12 @@ public class GameManager : MonoBehaviour
 			FadeOut();
 
 		if (isGameOver)
+		{
+			if(Input.GetKeyDown(KeyCode.R))
+				SceneManager.LoadScene("Title");
+				
 			ShowGameOverScreen();
+		}
 
 		if (!isGameOver)
 			HandleToxicity();
@@ -105,9 +113,16 @@ public class GameManager : MonoBehaviour
 		{
 			_timer = 0;
 			isGameOver = true;
+			SetStatsText();
 			gameoverText.text = "TIMES UP!";
 		}
 
+	}
+
+	void SetStatsText()
+	{
+		creditsEarnedText.text = credits.ToString();
+		organsSoldText.text = organsSold.ToString();
 	}
 
 	void FadeOut()
@@ -248,6 +263,7 @@ public class GameManager : MonoBehaviour
 		{
 			isGameOver = true;
 			gameoverText.text = "GAME OVER";
+			SetStatsText();
 		}
 	}
 
@@ -266,6 +282,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		Instance = this;
-		DontDestroyOnLoad(gameObject);
+		// DontDestroyOnLoad(gameObject);
 	}
 }

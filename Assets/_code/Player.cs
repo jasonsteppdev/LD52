@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 	[SerializeField] SpriteRenderer _holdingBody;
 	[SerializeField] GameObject chopbar;
 	[SerializeField] Image chopFillBar;
+	[SerializeField] Animator animator;
 
 	Vector2 _input = new Vector2(0, 0);
 	Vector2 _direction = new Vector2(0, 0);
@@ -89,6 +90,10 @@ public class Player : MonoBehaviour
 
 		_rb.position += _direction * moveSpeed * Time.deltaTime;
 
+		if(_input.x != 0 || _input.y != 0)
+			animator.SetBool("isWalking", true);
+		else 
+			animator.SetBool("isWalking", false);
 
 		if (_input.x < 0)
 		{
